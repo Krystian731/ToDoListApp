@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,23 +13,24 @@ import java.util.Random;
 public class StringService {
 
     @Autowired
-    private StringRepository stringRepository;
+    private StringRepository mStringRepository;
 
     public StringService(StringRepository stringRepository) {
-        this.stringRepository = stringRepository;
+        this.mStringRepository = stringRepository;
     }
 
-    public List<StringEntity> getAllStrings() { return Lists.newArrayList(stringRepository.findAll()); }
+    public List<StringEntity> getAllStrings() { return Lists.newArrayList(mStringRepository.findAll()); }
 
     public StringEntity getById(Long id) {
-        StringEntity stringEntity = stringRepository.findById(id).orElseThrow(() -> new StringDoesNotExistException(id));
+        StringEntity stringEntity = mStringRepository.findById(id)
+                .orElseThrow(() -> new StringDoesNotExistException(id));
         return stringEntity;
     }
 
     public String getString() {
         Random random = new Random();
 
-        List<StringEntity> stringEntities = Lists.newArrayList(stringRepository.findAll());
+        List<StringEntity> stringEntities = Lists.newArrayList(mStringRepository.findAll());
 
         int n = random.nextInt(stringEntities.size());
         Long randomNumber = Long.valueOf(n);
@@ -38,17 +38,17 @@ public class StringService {
     }
 
     public void addNewString(StringEntity stringEntity){
-        stringRepository.save(stringEntity);
+        mStringRepository.save(stringEntity);
     }
 
     public void deleteString(Long id) {
-        if (!stringRepository.existsById(id)) { throw new StringDoesNotExistException(id); }
-        stringRepository.deleteById(id);
+        if (!mStringRepository.existsById(id)) throw new StringDoesNotExistException(id);
+        mStringRepository.deleteById(id);
     }
 
     @Transactional
     public void updateString(Long id, String text) {
-        StringEntity stringEntity = stringRepository.findById(id).orElseThrow(() -> new StringDoesNotExistException(id));
+        StringEntity stringEntity = mStringRepository.findById(id).orElseThrow(() -> new StringDoesNotExistException(id));
         stringEntity.setStringText(text);
     }
 }

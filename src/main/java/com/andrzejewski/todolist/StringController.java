@@ -10,41 +10,41 @@ import java.util.List;
 public class StringController {
 
     @Autowired
-    private final StringService stringService;
+    private final StringService mStringService;
 
     public StringController(StringService stringService) {
-        this.stringService = stringService;
+        this.mStringService = stringService;
     }
 
     @GetMapping
     public List<StringEntity> getAllStrings() {
-        return stringService.getAllStrings();
+        return mStringService.getAllStrings();
 
     }
 
     @GetMapping(path = "/get/{stringId}")
     public StringEntity getById(@PathVariable("stringId") Long id) {
-        return stringService.getById(id);
+        return mStringService.getById(id);
     }
 
     @GetMapping(path = "/getString/{string}")
     public String getString(@PathVariable("string") String string) {
-        return stringService.getString() + string;
+        return mStringService.getString() + string;
     }
 
     @PostMapping
     public void addNewString(@RequestBody StringEntity stringEntity) {
-        stringService.addNewString(stringEntity);
+        mStringService.addNewString(stringEntity);
     }
 
     @DeleteMapping(path = "/delete/{stringId}")
     public void deleteString(@PathVariable("stringId") Long stringId) {
-        stringService.deleteString(stringId);
+        mStringService.deleteString(stringId);
     }
 
     @PutMapping(path = "/{stringId}")
     public void updateString(@PathVariable("stringId") Long id,
                              @RequestParam(required = false) String text) {
-        stringService.updateString(id, text);
+        mStringService.updateString(id, text);
     }
 }

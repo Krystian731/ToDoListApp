@@ -8,43 +8,43 @@ public class StringEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long stringId;
+    private Long mStringId;
 
-    private String stringText;
+    private String mStringText;
 
     public StringEntity() {
     }
 
     public StringEntity(Long stringId, String stringText) {
-        this.stringId = stringId;
-        this.stringText = stringText;
+        this.mStringId = stringId;
+        this.mStringText = stringText;
     }
 
     public StringEntity(String stringText) {
-        this.stringText = stringText;
+        this.mStringText = stringText;
     }
 
     public Long getStringId() {
-        return stringId;
+        return mStringId;
     }
 
     public void setStringId(Long stringId) {
-        this.stringId = stringId;
+        this.mStringId = stringId;
     }
 
     public String getStringText() {
-        return stringText;
+        return mStringText;
     }
 
     public void setStringText(String stringText) {
-        this.stringText = stringText;
+        this.mStringText = stringText;
     }
 
     @Override
     public String toString() {
         return "StringEntity{" +
-                "id=" + stringId + '\'' +
-                ", text='" + stringText + '\'' +
+                "id=" + mStringId + '\'' +
+                ", text='" + mStringText + '\'' +
                 '}';
     }
 }
