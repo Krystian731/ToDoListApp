@@ -22,12 +22,12 @@ public class StringController {
 
     }
 
-    @GetMapping(path = "get/{stringId}")
+    @GetMapping(path = "/get/{stringId}")
     public StringEntity getById(@PathVariable("stringId") Long id) {
         return stringService.getById(id);
     }
 
-    @GetMapping(path = "getString/{string}")
+    @GetMapping(path = "/getString/{string}")
     public String getString(@PathVariable("string") String string) {
         return stringService.getString() + string;
     }
@@ -37,12 +37,12 @@ public class StringController {
         stringService.addNewString(stringEntity);
     }
 
-    @DeleteMapping(path = "delete/{stringId}")
+    @DeleteMapping(path = "/delete/{stringId}")
     public void deleteString(@PathVariable("stringId") Long stringId) {
         stringService.deleteString(stringId);
     }
 
-    @PutMapping(path = "{stringId}")
+    @PutMapping(path = "/{stringId}")
     public void updateString(@PathVariable("stringId") Long id,
                              @RequestParam(required = false) String text) {
         stringService.updateString(id, text);

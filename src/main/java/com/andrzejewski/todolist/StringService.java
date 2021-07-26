@@ -1,10 +1,11 @@
 package com.andrzejewski.todolist;
 
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -19,28 +20,21 @@ public class StringService {
         this.stringRepository = stringRepository;
     }
 
-    public List<StringEntity> getAllStrings() {
-        return stringRepository.findAll();
-    }
+    public List<StringEntity> getAllStrings() { return Lists.newArrayList(stringRepository.findAll()); }
 
     public StringEntity getById(Long id) {
-        StringEntity stringEntity = stringRepository.findById(id).orElseThrow(() ->
-                new IllegalStateException("String with that id doesn't exists"));
+        StringEntity stringEntity = stringRepository.findById(id).orElseThrow(() -> new StringDoesNotExistException(id));
         return stringEntity;
     }
 
     public String getString() {
         Random random = new Random();
-        int n = random.nextInt(50);
-        Long randomNumber = Long.valueOf(n);
-        while (true) {
 
-            if (stringRepository.existsById(randomNumber)) {
-                return stringRepository.findById(randomNumber).get().getString_text();
-            }
-            n = random.nextInt(50);
-            randomNumber = Long.valueOf(n);
-        }
+        List<StringEntity> stringEntities = Lists.newArrayList(stringRepository.findAll());
+
+        int n = random.nextInt(stringEntities.size());
+        Long randomNumber = Long.valueOf(n);
+        return stringEntities.get(n).getStringText();
     }
 
     public void addNewString(StringEntity stringEntity){
@@ -48,16 +42,13 @@ public class StringService {
     }
 
     public void deleteString(Long id) {
-        if (!stringRepository.existsById(id)) {
-            throw new IllegalStateException("String with that id doesn't exists");
-        }
+        if (!stringRepository.existsById(id)) { throw new StringDoesNotExistException(id); }
         stringRepository.deleteById(id);
     }
 
     @Transactional
     public void updateString(Long id, String text) {
-        StringEntity stringEntity = stringRepository.findById(id).orElseThrow(() ->
-                new IllegalStateException("String with that id doesn't exists"));
-        stringEntity.setString_text(text);
+        StringEntity stringEntity = stringRepository.findById(id).orElseThrow(() -> new StringDoesNotExistException(id));
+        stringEntity.setStringText(text);
     }
 }
