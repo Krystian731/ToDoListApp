@@ -22,7 +22,8 @@ public class StringService {
     public List<StringEntity> getAllStrings() { return Lists.newArrayList(mStringRepository.findAll()); }
 
     public StringEntity getById(Long id) {
-        StringEntity stringEntity = mStringRepository.findById(id)
+        StringEntity stringEntity = mStringRepository
+                .findById(id)
                 .orElseThrow(() -> new StringDoesNotExistException(id));
         return stringEntity;
     }
