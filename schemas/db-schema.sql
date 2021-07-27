@@ -6,10 +6,10 @@ CREATE DATABASE todo
 use todo;
 
 
-CREATE TABLE "user"
+CREATE TABLE users
 (
 user_id INT(6) NOT NULL PRIMARY KEY,
-username CHAR(25)
+username CHAR(30)
 );
 
 CREATE TABLE tasks
