@@ -8,21 +8,11 @@ public class StringEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @Column(name = "string_id")
     private Long mStringId;
 
+    @Column(name = "string_text")
     private String mStringText;
-
-    public StringEntity() {
-    }
-
-    public StringEntity(Long stringId, String stringText) {
-        this.mStringId = stringId;
-        this.mStringText = stringText;
-    }
-
-    public StringEntity(String stringText) {
-        this.mStringText = stringText;
-    }
 
     public Long getStringId() {
         return mStringId;
