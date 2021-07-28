@@ -1,8 +1,8 @@
-package com.andrzejewski.todolist;
+package com.andrzejewski.todolist.task;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, Long> {
+public interface TaskRepository extends CrudRepository<TaskEntity, Long> {
 }

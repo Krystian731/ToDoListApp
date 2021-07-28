@@ -1,4 +1,4 @@
-package com.andrzejewski.todolist;
+package com.andrzejewski.todolist.user;
 
 import javax.persistence.*;
 
@@ -14,6 +14,12 @@ public class UserEntity {
     @Column(name = "username")
     private String mUsername;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(String username) {
+        mUsername = username;
+    }
 
     public Long getUserId() { return mUserId; }
 
