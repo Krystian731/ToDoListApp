@@ -12,16 +12,15 @@ import java.util.List;
 public class TaskService {
 
     @Autowired
-    private TaskRepository mTaskRepository;
-    private UserService mUserService;
+    private final TaskRepository mTaskRepository;
+    private final UserService mUserService;
 
     public TaskService(TaskRepository taskRepository, UserService userService) {
         mTaskRepository = taskRepository;
         mUserService = userService;
     }
 
-
-    public List<TaskEntity> getAllUsersTasks(String username) {
+    public List<TaskEntity> getAllTasksByUsername(String username) {
         Long userId = mUserService.getIdByUsername(username);
 
         List<TaskEntity> taskEntities = Lists.newArrayList(mTaskRepository.findAll());
@@ -32,5 +31,17 @@ public class TaskService {
             if (taskEntity.getUserId().equals(userId)) usersTaskEntities.add(taskEntity);
         }
         return usersTaskEntities;
+    }
+
+    public void addNewTask(TaskEntity taskEntity) {
+        mTaskRepository.save(taskEntity);
+    }
+
+    public boolean deleteTask(String username, Long taskId) {
+
+        Long userId = mUserService.getIdByUsername(username);
+        if (mTaskRepository.findById(taskId).get().getUserId().equals(userId)) { mTaskRepository.deleteById(taskId); return true;}
+
+        return false;
     }
 }

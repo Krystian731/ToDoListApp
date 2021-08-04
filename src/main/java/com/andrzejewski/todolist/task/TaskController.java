@@ -1,13 +1,12 @@
 package com.andrzejewski.todolist.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController()
+@RequestMapping(path = "/users")
 public class TaskController {
 
     @Autowired
@@ -17,10 +16,18 @@ public class TaskController {
         mTaskService = taskService;
     }
 
-    @GetMapping("/users/{username}")
-    public List<TaskEntity> getAllUsersTasks(@PathVariable("username") String username) {
-        return mTaskService.getAllUsersTasks(username);
+    @GetMapping("/{username}")
+    public List<TaskEntity> getAllTasksByUsername(@PathVariable("username") String username) {
+        return mTaskService.getAllTasksByUsername(username);
     }
 
+    @PostMapping()
+    public void addNewTask(@RequestBody TaskEntity taskEntity) {
+        mTaskService.addNewTask(taskEntity);
+    }
 
+    @DeleteMapping("/{username}/{taskId}")
+    public boolean deleteTaskById(@PathVariable String username, @PathVariable Long taskId) {
+        return mTaskService.deleteTask(username, taskId);
+    }
 }
