@@ -10,7 +10,7 @@ import java.util.List;
 public class TaskController {
 
     @Autowired
-    private TaskService mTaskService;
+    private final TaskService mTaskService;
 
     public TaskController(TaskService taskService) {
         mTaskService = taskService;
