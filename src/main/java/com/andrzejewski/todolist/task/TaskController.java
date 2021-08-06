@@ -5,29 +5,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController()
+@RestController
 @RequestMapping(path = "/users")
 public class TaskController {
 
     @Autowired
-    private final TaskService mTaskService;
+    private TaskService mTaskService;
 
-    public TaskController(TaskService taskService) {
-        mTaskService = taskService;
+    @GetMapping("/{userId}")
+    public List<TaskEntity> getAllTasksByUserId(@PathVariable("userId") Long userId) {
+        return mTaskService.getAllTasksByUserId(userId);
     }
 
-    @GetMapping("/{username}")
-    public List<TaskEntity> getAllTasksByUsername(@PathVariable("username") String username) {
-        return mTaskService.getAllTasksByUsername(username);
-    }
-
-    @PostMapping()
+    @PostMapping
     public void addNewTask(@RequestBody TaskEntity taskEntity) {
         mTaskService.addNewTask(taskEntity);
     }
 
-    @DeleteMapping("/{username}/{taskId}")
-    public boolean deleteTaskById(@PathVariable String username, @PathVariable Long taskId) {
-        return mTaskService.deleteTask(username, taskId);
+    @DeleteMapping("/{userId}/{taskId}")
+    public boolean deleteTaskById(@PathVariable Long userId, @PathVariable Long taskId) {
+        return mTaskService.deleteTask(userId, taskId);
     }
 }

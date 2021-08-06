@@ -9,11 +9,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private final UserService mUserService;
-
-    public UserController(UserService userService) {
-        mUserService = userService;
-    }
+    private UserService mUserService;
 
     @GetMapping(path = "/users/all")
     public List<UserEntity> getAllUsers() { return mUserService.getAllUsers();}
@@ -28,10 +24,6 @@ public class UserController {
 
     @GetMapping("/signUp/{username}")
     public boolean isValidSignUpUsername(@PathVariable("username") String username) {
-        if (mUserService.checkUsername(username)) return false;
-
-        mUserService.addNewUser(username);
-
-        return true;
+        return mUserService.signUpUsername(username);
     }
 }
