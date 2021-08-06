@@ -3,7 +3,6 @@ package com.andrzejewski.todolist.user;
 import com.andrzejewski.todolist.exceptions.UserDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.assertj.core.util.Lists;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class UserService {
         this.mUserRepository = userRepository;
     }
 
-    public List<UserEntity> getAllUsers() { return Lists.newArrayList(mUserRepository.findAll()); }
+    public List<UserEntity> getAllUsers() { return mUserRepository.findAll(); }
 
     public UserEntity getById(Long id) {
         return mUserRepository
@@ -26,25 +25,14 @@ public class UserService {
     }
 
     public boolean checkUsername(String username) {
-        List<UserEntity> userEntities = Lists.newArrayList(mUserRepository.findAll());
+        return mUserRepository.findUserByUsername(username);
+    }
 
-        for (UserEntity userEntity : userEntities) {
-            if (userEntity.getUsername().equals(username)) return true;
-        }
+    public boolean signUpUsername(String username) {
+        if (!mUserRepository.findUserByUsername(username)) { addNewUser(username); return true; }
 
         return false;
     }
 
-    public Long getIdByUsername(String username) {
-        List<UserEntity> userEntities = Lists.newArrayList(mUserRepository.findAll());
-
-        for (UserEntity userEntity : userEntities) {
-            if (userEntity.getUsername().equals(username)) return userEntity.getUserId();
-        }
-        throw new UserDoesNotExistException(username);
-    }
-
-    public void addNewUser(String username) {
-        mUserRepository.save(new UserEntity(username));
-    }
+    public void addNewUser(String username) { mUserRepository.save(new UserEntity(username)); }
 }
