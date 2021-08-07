@@ -11,10 +11,10 @@ public class UserController {
     @Autowired
     private UserService mUserService;
 
-    @GetMapping(path = "/users/all")
+    @GetMapping(path = "/users")
     public List<UserEntity> getAllUsers() { return mUserService.getAllUsers();}
 
-    @GetMapping(path = "/users/get/{userId}")
+    @GetMapping(path = "/users/{userId}")
     public UserEntity getUserById(@PathVariable("userId") Long id) { return mUserService.getById(id);}
 
     @GetMapping("/login/{username}")
@@ -22,8 +22,8 @@ public class UserController {
         return mUserService.checkUsername(username);
     }
 
-    @GetMapping("/signUp/{username}")
-    public boolean isValidSignUpUsername(@PathVariable("username") String username) {
-        return mUserService.signUpUsername(username);
+    @PostMapping
+    public boolean isValidSignUpUsername(@RequestBody UserEntity userEntity) {
+        return mUserService.signUpUsername(userEntity);
     }
 }

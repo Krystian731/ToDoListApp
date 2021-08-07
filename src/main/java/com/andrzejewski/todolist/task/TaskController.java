@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/users")
+@RequestMapping(path = "/tasks")
 public class TaskController {
 
     @Autowired
@@ -18,9 +18,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public void addNewTask(@RequestBody TaskEntity taskEntity) {
-        mTaskService.addNewTask(taskEntity);
-    }
+    public void addNewTask(@RequestBody TaskEntity taskEntity) { mTaskService.addNewTask(taskEntity); }
 
     @DeleteMapping("/{userId}/{taskId}")
     public boolean deleteTaskById(@PathVariable Long userId, @PathVariable Long taskId) {
