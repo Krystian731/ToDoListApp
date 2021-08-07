@@ -25,14 +25,14 @@ public class UserService {
     }
 
     public boolean checkUsername(String username) {
-        return mUserRepository.findUserByUsername(username);
+        return mUserRepository.findUserByUsername(username) != null;
     }
 
-    public boolean signUpUsername(String username) {
-        if (!mUserRepository.findUserByUsername(username)) { addNewUser(username); return true; }
+    public boolean signUpUsername(UserEntity userEntity) {
+        if (mUserRepository.findUserByUsername(userEntity.getUsername()) == null) { addNewUser(userEntity); return true; }
 
         return false;
     }
 
-    public void addNewUser(String username) { mUserRepository.save(new UserEntity(username)); }
+    public void addNewUser(UserEntity userEntity) { mUserRepository.save(userEntity); }
 }

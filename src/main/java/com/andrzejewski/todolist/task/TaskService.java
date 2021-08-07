@@ -21,10 +21,9 @@ public class TaskService {
 
     public boolean deleteTask(Long userId, Long taskId) {
 
-        if (mTaskRepository.existsById(taskId) && mTaskRepository.findById(taskId).get()
-                        .getUserId()
-                .equals(userId)) { mTaskRepository.deleteById(taskId); return true;}
-
-        return false;
+        Optional<TaskEntity> task = mTaskRepository.findById(taskId);
+        if(!task.isPresent() || !task.get().getUserId().equals(userId)) return false;
+        mTaskRepository.deleteById(taskId);
+        return true;
     }
 }
