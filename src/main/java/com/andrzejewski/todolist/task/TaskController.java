@@ -3,6 +3,7 @@ package com.andrzejewski.todolist.task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,5 +26,12 @@ public class TaskController {
     @DeleteMapping("/{userId}/{taskId}")
     public boolean deleteTaskById(@PathVariable Long userId, @PathVariable Long taskId) {
         return mTaskService.deleteTask(userId, taskId);
+    }
+
+    @PutMapping("/{taskId}")
+    public void updateTask(@PathVariable Long taskId, @RequestParam(required = false) String text,
+                           @RequestParam(required = false) LocalDate taskCompletionDate) {
+        System.out.println(taskId + " " + text + " " + taskCompletionDate);
+        mTaskService.updateTask(taskId, text, taskCompletionDate);
     }
 }
