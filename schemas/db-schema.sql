@@ -14,9 +14,11 @@ username VARCHAR(30)
 
 CREATE TABLE tasks
 (
-task_id INT(6) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-user_id INT(6) NOT NULL, FOREIGN KEY
+task_id INT(6) NOT NULL AUTO_INCREMENT,
+user_id INT(6) NOT NULL,
 task_text VARCHAR(80) NOT NULL,
 task_date DATE,
-task_completion_date DATE NULL DEFAULT NULL
+task_completion_date DATE NULL DEFAULT NULL,
+PRIMARY KEY (task_id),
+FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
