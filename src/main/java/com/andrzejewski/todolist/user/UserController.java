@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping
-    public boolean isValidUsernameForSignUp(@RequestBody UserEntity userEntity) {
+    public boolean signUpUsername(@RequestBody UserEntity userEntity) {
         return mUserService.signUpUsername(userEntity);
     }
 }
