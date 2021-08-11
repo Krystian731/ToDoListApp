@@ -1,7 +1,7 @@
 package com.andrzejewski.todolist.task;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
@@ -19,10 +19,10 @@ public class TaskEntity {
     private String mTaskText;
 
     @Column(name = "task_completion_date")
-    private LocalDate mTaskCompletionDate;
+    private LocalDateTime mTaskCompletionDate;
 
     @Column(name = "task_date")
-    private LocalDate mTaskDate;
+    private LocalDateTime mTaskDate;
 
     public Long getTaskId() {
         return mTaskId;
@@ -48,15 +48,15 @@ public class TaskEntity {
         mTaskText = taskText;
     }
 
-    public LocalDate getTaskCompletionDate() {
+    public LocalDateTime getTaskCompletionDate() {
         return mTaskCompletionDate;
     }
 
-    public void setTaskCompletionDate(LocalDate taskCompletionDate) {
+    public void setTaskCompletionDate(LocalDateTime taskCompletionDate) {
         mTaskCompletionDate = taskCompletionDate;
     }
 
-    public LocalDate getTaskDate() { return mTaskDate; }
+    public LocalDateTime getTaskDate() { return mTaskDate; }
 
-    public void setTaskDate(LocalDate taskDate) { mTaskDate = taskDate; }
+    public void setTaskDate(LocalDateTime taskDate) { mTaskDate = taskDate; }
 }

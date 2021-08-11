@@ -3,7 +3,7 @@ package com.andrzejewski.todolist.task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -30,7 +30,7 @@ public class TaskController {
 
     @PutMapping("/{taskId}")
     public void updateTask(@PathVariable Long taskId, @RequestParam(required = false) String text,
-                           @RequestParam(required = false) LocalDate taskCompletionDate) {
+                           @RequestParam(required = false) LocalDateTime taskCompletionDate) {
         System.out.println(taskId + " " + text + " " + taskCompletionDate);
         mTaskService.updateTask(taskId, text, taskCompletionDate);
     }
