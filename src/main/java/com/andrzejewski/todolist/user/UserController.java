@@ -18,12 +18,12 @@ public class UserController {
     public UserEntity getUserById(@PathVariable("userId") Long id) { return mUserService.getById(id);}
 
     @GetMapping("/login/{username}")
-    public boolean isValidLoginUsername(@PathVariable("username") String username) {
-        return mUserService.checkUsername(username);
+    public boolean isValidUsernameForLogin(@PathVariable("username") String username) {
+        return mUserService.isUsernameTaken(username);
     }
 
     @PostMapping
-    public boolean isValidSignUpUsername(@RequestBody UserEntity userEntity) {
+    public boolean isValidUsernameForSignUp(@RequestBody UserEntity userEntity) {
         return mUserService.signUpUsername(userEntity);
     }
 }

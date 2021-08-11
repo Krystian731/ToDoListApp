@@ -24,12 +24,12 @@ public class UserService {
                 .orElseThrow(() -> new UserDoesNotExistException(id));
     }
 
-    public boolean checkUsername(String username) {
+    public boolean isUsernameTaken(String username) {
         return mUserRepository.findUserByUsername(username) != null;
     }
 
     public boolean signUpUsername(UserEntity userEntity) {
-        if (mUserRepository.findUserByUsername(userEntity.getUsername()) == null) { addNewUser(userEntity); return true; }
+        if (!isUsernameTaken(userEntity.getUsername())) { addNewUser(userEntity); return true; }
 
         return false;
     }
