@@ -1,6 +1,7 @@
 package com.andrzejewski.todolist.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -34,7 +35,8 @@ public class TaskController {
     }
 
     @PatchMapping("/{taskId}/taskCompleted")
-    public void markTaskAsDone(@PathVariable Long taskId, @RequestParam String taskCompletionDate) {
+    public void markTaskAsDone(@PathVariable Long taskId, @RequestParam
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime taskCompletionDate) {
         mTaskService.markTaskAsDone(taskId, taskCompletionDate);
     }
 }

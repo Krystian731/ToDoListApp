@@ -40,9 +40,8 @@ public class TaskService {
     }
 
     @Transactional
-    public void markTaskAsDone(Long id, String taskCompletionDate) {
+    public void markTaskAsDone(Long id, LocalDateTime taskCompletionDate) {
         TaskEntity taskEntity = mTaskRepository.findById(id).orElseThrow(() -> new TaskDoesNotExistException(id));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss");
-        taskEntity.setTaskCompletionDate(LocalDateTime.parse(taskCompletionDate));
+        taskEntity.setTaskCompletionDate(taskCompletionDate);
     }
 }
