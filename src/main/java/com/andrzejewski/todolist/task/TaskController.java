@@ -1,6 +1,7 @@
 package com.andrzejewski.todolist.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -14,8 +15,8 @@ public class TaskController {
     private TaskService mTaskService;
 
     @GetMapping("/{userId}")
-    public List<TaskEntity> getAllTasksByUserId(@PathVariable("userId") Long userId) {
-        return mTaskService.getAllTasksByUserId(userId);
+    public List<TaskEntity> getAllTasksByUserId(@PathVariable("userId") Long userId, @RequestParam(required = false) boolean completedTask) {
+        return mTaskService.getAllTasksByUserId(userId, completedTask);
     }
 
     @PostMapping
@@ -28,10 +29,14 @@ public class TaskController {
         return mTaskService.deleteTask(userId, taskId);
     }
 
-    @PutMapping("/{taskId}")
-    public void updateTask(@PathVariable Long taskId, @RequestParam(required = false) String text,
-                           @RequestParam(required = false) LocalDateTime taskCompletionDate) {
-        System.out.println(taskId + " " + text + " " + taskCompletionDate);
-        mTaskService.updateTask(taskId, text, taskCompletionDate);
+    @PatchMapping("/{taskId}/updateText")
+    public void updateTask(@PathVariable Long taskId, @RequestParam String text) {
+        mTaskService.updateTaskText(taskId, text);
+    }
+
+    @PatchMapping("/{taskId}/taskCompleted")
+    public void markTaskAsDone(@PathVariable Long taskId, @RequestParam
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime taskCompletionDate) {
+        mTaskService.markTaskAsDone(taskId, taskCompletionDate);
     }
 }

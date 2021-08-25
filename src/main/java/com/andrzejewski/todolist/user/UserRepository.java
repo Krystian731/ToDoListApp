@@ -10,6 +10,6 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
     List<UserEntity> findAll();
 
-    @Query(value = "SELECT * FROM USERS WHERE username = :username", nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE username = :username", nativeQuery = true)
     UserEntity findUserByUsername(String username);
 }

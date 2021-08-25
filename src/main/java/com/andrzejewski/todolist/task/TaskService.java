@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -14,8 +15,10 @@ public class TaskService {
     @Autowired
     private TaskRepository mTaskRepository;
 
-    public List<TaskEntity> getAllTasksByUserId(Long userId) {
-        return mTaskRepository.findAllTasksByUserId(userId);
+    public List<TaskEntity> getAllTasksByUserId(Long userId, boolean completedTask) {
+        if (completedTask) return mTaskRepository.findAllCompletedTasksByUserId(userId);
+
+        return mTaskRepository.findAllNotCompletedTasksByUserId(userId);
     }
 
     public void addNewTask(TaskEntity taskEntity) {
@@ -31,9 +34,14 @@ public class TaskService {
     }
 
     @Transactional
-    public void updateTask(Long id, String text, LocalDateTime date) {
+    public void updateTaskText(Long id, String text) {
         TaskEntity taskEntity = mTaskRepository.findById(id).orElseThrow(() -> new TaskDoesNotExistException(id));
-        if (text != null) { taskEntity.setTaskText(text); }
-        taskEntity.setTaskCompletionDate(date);
+        taskEntity.setTaskText(text);
+    }
+
+    @Transactional
+    public void markTaskAsDone(Long id, LocalDateTime taskCompletionDate) {
+        TaskEntity taskEntity = mTaskRepository.findById(id).orElseThrow(() -> new TaskDoesNotExistException(id));
+        taskEntity.setTaskCompletionDate(taskCompletionDate);
     }
 }
