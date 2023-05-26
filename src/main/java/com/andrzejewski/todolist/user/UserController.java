@@ -22,7 +22,7 @@ public class UserController {
         return mUserService.isUsernameTaken(username);
     }
 
-    @PostMapping
+    @PostMapping("/users/{save}")
     public boolean signUpUsername(@RequestBody UserEntity userEntity) {
         return mUserService.signUpUsername(userEntity);
     }
